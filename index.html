@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V4L8Y81M5E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V4L8Y81M5E');
+</script>
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalkulator Zakat - Djebeng Wibowo</title>
@@ -159,6 +167,14 @@
     }
 
     function calculateZakat() {
+        gtag('event', 'calculate_click', {
+        'zakat_type': document.getElementById('zakatType').value,
+        'language': document.getElementById('language').value
+    });
+
+    const lang = document.getElementById('language').value;
+    const type = document.getElementById('zakatType').value;
+}
         const lang = document.getElementById('language').value;
         const type = document.getElementById('zakatType').value;
         if (!type) return;
@@ -198,4 +214,5 @@
     }
 </script>
 </body>
+
 </html>
