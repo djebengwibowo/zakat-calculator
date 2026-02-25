@@ -186,4 +186,33 @@
         } else {
             const val = parseFloat(document.getElementById('totalValue').value) || 0;
             const rates = { maal: 0.025, emas: 0.025, tijarah: 0.025, zuru: 0.05, rikaz: 0.20, profesi: 0.025 };
-            total = val * (rates
+            total = val * (rates[type] || 0.025);
+        }
+
+        const formatter = new Intl.NumberFormat(d.locale, { style: 'currency', currency: d.curr, maximumFractionDigits: 0 });
+        document.getElementById('resTotal').innerText = formatter.format(total);
+        
+        const content = d[type] || zakatData['id'][type];
+        document.getElementById('resArabic').innerText = arabicTexts[type];
+        document.getElementById('resTrans').innerText = `"${content.tr}"`;
+        document.getElementById('resSource').innerText = content.src;
+        document.getElementById('resRule').innerText = content.rule;
+        document.getElementById('resultBox').style.display = 'block';
+        
+        document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    const bg = document.getElementById('bgLayer');
+    const icons = ['⭐', '✨', '🌙', '🌿'];
+    for(let i=0; i<10; i++) {
+        let span = document.createElement('span'); 
+        span.className = 'floating-icon';
+        span.innerText = icons[Math.floor(Math.random()*icons.length)];
+        span.style.left = Math.random() * 100 + 'vw';
+        span.style.animationDelay = Math.random() * 5 + 's';
+        span.style.fontSize = (Math.random() * 10 + 15) + 'px';
+        bg.appendChild(span);
+    }
+</script>
+</body>
+</html>
