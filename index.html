@@ -1,56 +1,43 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4L8Y81M5E"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-V4L8Y81M5E');
-    </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    ...
-</head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalkulator Zakat - Djebeng Wibowo</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --nusuk-gold: #c5a059; --nusuk-green: #0b4a3f; --nusuk-bg: #f9f7f2; --white: #ffffff; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--nusuk-bg); margin: 0; padding: 60px 20px; display: flex; justify-content: center; min-height: 100vh; overflow-x: hidden; position: relative; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--nusuk-bg); margin: 0; padding: 20px 15px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; overflow-x: hidden; position: relative; }
         
         .bg-animate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: linear-gradient(135deg, #f9f7f2 0%, #ece5d5 100%); }
-        .floating-icon { position: absolute; opacity: 0.8; animation: floatUp 15s infinite linear; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.6)); z-index: -1; }
-        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+        .floating-icon { position: absolute; opacity: 0.6; animation: floatUp 15s infinite linear; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.4)); z-index: -1; }
+        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
-        .container { width: 100%; max-width: 650px; background: var(--white); border-radius: 30px; box-shadow: 0 25px 50px rgba(0,0,0,0.08); padding: 40px; border-top: 10px solid var(--nusuk-gold); position: relative; z-index: 5; }
-        header { text-align: center; margin-bottom: 30px; }
-        h1 { color: var(--nusuk-green); font-size: 2.2rem; margin: 0; font-weight: 800; }
+        .container { width: 100%; max-width: 500px; background: var(--white); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); padding: 25px 20px; border-top: 8px solid var(--nusuk-gold); position: relative; z-index: 5; margin-top: 20px; }
+        header { text-align: center; margin-bottom: 20px; }
+        h1 { color: var(--nusuk-green); font-size: 1.6rem; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
 
-        .form-section { background: #fafafa; padding: 20px; border-radius: 18px; border: 1px solid #f0f0f0; margin-bottom: 15px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--nusuk-green); font-size: 0.85rem; }
-        select, input { width: 100%; padding: 14px; border: 1.5px solid #e8e8e8; border-radius: 12px; font-size: 1rem; box-sizing: border-box; }
+        .form-section { background: #fafafa; padding: 15px; border-radius: 14px; border: 1px solid #f0f0f0; margin-bottom: 12px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--nusuk-green); font-size: 0.8rem; }
+        select, input { width: 100%; padding: 12px; border: 1.5px solid #e8e8e8; border-radius: 10px; font-size: 0.9rem; box-sizing: border-box; appearance: none; background-color: white; }
 
-        button { width: 100%; padding: 18px; background: var(--nusuk-green); color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        button:hover { background: #08362e; }
+        button { width: 100%; padding: 15px; background: var(--nusuk-green); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 5px; transition: 0.3s; box-shadow: 0 4px 15px rgba(11, 74, 63, 0.2); }
+        button:hover { background: #08362e; transform: translateY(-1px); }
 
-        .result-card { background: #fdfaf3; border: 1.5px solid #f1e6cf; border-radius: 20px; padding: 25px; margin-top: 30px; animation: fadeIn 0.5s ease; display: none; }
+        .result-card { background: #fdfaf3; border: 1.5px solid #f1e6cf; border-radius: 16px; padding: 20px; margin-top: 25px; animation: fadeIn 0.5s ease; display: none; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .total-amount { font-size: 2.2rem; color: var(--nusuk-green); font-weight: 800; text-align: center; margin: 15px 0; }
-        .arabic { font-family: 'Amiri', serif; font-size: 20px; text-align: center; direction: rtl; line-height: 1.8; margin-bottom: 15px; color: var(--nusuk-green); padding: 0 10px; }
-        .translation { font-style: italic; font-size: 0.85rem; color: #555; text-align: center; margin-bottom: 10px; line-height: 1.6; }
-        .source-tag { font-weight: 700; color: var(--nusuk-gold); font-size: 0.8rem; text-align: center; display: block; text-transform: uppercase; margin-bottom: 20px; }
         
-        .rule-box { border-top: 1px dashed #dcc7a1; padding-top: 15px; margin-top: 10px; text-align: center; }
-        .rule-tag { font-size: 0.75rem; color: var(--nusuk-green); font-weight: 700; background: #eee5d3; padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 5px; }
-        .rule-text { font-size: 0.85rem; color: #444; display: block; font-weight: 500; }
+        .total-amount { font-size: 1.8rem; color: var(--nusuk-green); font-weight: 800; text-align: center; margin: 10px 0; word-wrap: break-word; }
+        .arabic { font-family: 'Amiri', serif; font-size: 1.1rem; text-align: center; direction: rtl; line-height: 1.6; margin-bottom: 12px; color: var(--nusuk-green); padding: 0 5px; }
+        .translation { font-style: italic; font-size: 0.75rem; color: #555; text-align: center; margin-bottom: 8px; line-height: 1.5; }
+        .source-tag { font-weight: 700; color: var(--nusuk-gold); font-size: 0.7rem; text-align: center; display: block; text-transform: uppercase; margin-bottom: 15px; }
+        
+        .rule-box { border-top: 1px dashed #dcc7a1; padding-top: 12px; margin-top: 5px; text-align: center; }
+        .rule-tag { font-size: 0.65rem; color: var(--nusuk-green); font-weight: 700; background: #eee5d3; padding: 3px 8px; border-radius: 20px; display: inline-block; margin-bottom: 4px; }
+        .rule-text { font-size: 0.75rem; color: #444; display: block; font-weight: 500; }
 
-        .copyright { text-align: center; margin-top: 25px; font-size: 0.75rem; color: #999; font-weight: 500; }
-        .copyright a { color: #999; text-decoration: none; transition: 0.3s; border-bottom: 1px solid transparent; }
-        .copyright a:hover { color: var(--nusuk-gold); border-bottom: 1px solid var(--nusuk-gold); }
+        .copyright { text-align: center; margin-top: 20px; font-size: 0.7rem; color: #999; font-weight: 500; padding-bottom: 10px; }
+        .copyright a { color: #999; text-decoration: none; border-bottom: 1px solid transparent; }
     </style>
 </head>
 <body>
@@ -90,7 +77,7 @@
             <div id="fitrahFields" style="display:none;">
                 <label id="lblPrice">Harga Beras per Kg</label>
                 <input type="number" id="ricePrice" placeholder="0">
-                <label id="lblSoul" style="margin-top:15px;">Jumlah Orang (Jiwa)</label>
+                <label id="lblSoul" style="margin-top:10px;">Jumlah Orang (Jiwa)</label>
                 <input type="number" id="soulCount" placeholder="0">
             </div>
             <div id="otherFields" style="display:none;">
@@ -119,6 +106,13 @@
     </div>
 
 <script>
+    // Konfigurasi Google Analytics (gtag) jika diperlukan
+    // function trackEvent(type, lang) {
+    //     if (typeof gtag === 'function') {
+    //         gtag('event', 'calculate_click', {'zakat_type': type, 'language': lang});
+    //     }
+    // }
+
     const zakatData = {
         id: {
             title: "Kalkulator Zakat", btn: "Hitung Zakat", soul: "Jumlah Orang (Jiwa)", price: "Harga Beras per Kg", value: "Total Nilai Harta", curr: "IDR", locale: "id-ID", ruleLabel: "Nisab & Haul",
@@ -176,6 +170,8 @@
         const type = document.getElementById('zakatType').value;
         if (!type) return;
 
+        // trackEvent(type, lang); // Aktifkan jika gtag sudah dipasang
+
         const d = zakatData[lang] || zakatData['en'];
         let total = 0;
 
@@ -189,7 +185,7 @@
             total = val * (rates[type] || 0.025);
         }
 
-        const formatter = new Intl.NumberFormat(d.locale, { style: 'currency', currency: d.curr });
+        const formatter = new Intl.NumberFormat(d.locale, { style: 'currency', currency: d.curr, maximumFractionDigits: 0 });
         document.getElementById('resTotal').innerText = formatter.format(total);
         
         const content = d[type] || zakatData['id'][type];
@@ -198,18 +194,23 @@
         document.getElementById('resSource').innerText = content.src;
         document.getElementById('resRule').innerText = content.rule;
         document.getElementById('resultBox').style.display = 'block';
+        
+        // Auto scroll ke hasil di mobile
+        document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
+    // Latar belakang animasi yang lebih ringan untuk mobile
     const bg = document.getElementById('bgLayer');
-    for(let i=0; i<15; i++) {
-        let span = document.createElement('span'); span.className = 'floating-icon';
-        span.innerText = ['⭐', '✨', '🌙', '🌿'][Math.floor(Math.random()*4)];
+    const icons = ['⭐', '✨', '🌙', '🌿'];
+    for(let i=0; i<10; i++) {
+        let span = document.createElement('span'); 
+        span.className = 'floating-icon';
+        span.innerText = icons[Math.floor(Math.random()*icons.length)];
         span.style.left = Math.random() * 100 + 'vw';
         span.style.animationDelay = Math.random() * 5 + 's';
-        span.style.fontSize = (Math.random() * 10 + 20) + 'px';
+        span.style.fontSize = (Math.random() * 10 + 15) + 'px';
         bg.appendChild(span);
     }
 </script>
 </body>
 </html>
-
