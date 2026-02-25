@@ -7,26 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --nusuk-gold: #c5a059; --nusuk-green: #0b4a3f; --nusuk-bg: #f9f7f2; --white: #ffffff; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--nusuk-bg); margin: 0; padding: 20px 0; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; overflow-x: hidden; position: relative; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--nusuk-bg); margin: 0; padding: 20px 15px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; overflow-x: hidden; position: relative; }
         
         .bg-animate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: linear-gradient(135deg, #f9f7f2 0%, #ece5d5 100%); }
         .floating-icon { position: absolute; opacity: 0.6; animation: floatUp 15s infinite linear; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.4)); z-index: -1; }
         @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
-        /* Penyesuaian Lebar Kotak untuk Mobile & Desktop */
-        .container { 
-            width: 88%; /* Memberi ruang di kiri-kanan pada mobile agar ikon terlihat */
-            max-width: 500px; 
-            background: var(--white); 
-            border-radius: 20px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
-            padding: 25px 20px; 
-            border-top: 8px solid var(--nusuk-gold); 
-            position: relative; 
-            z-index: 5; 
-            margin: 20px auto; 
-        }
-
+        .container { width: 100%; max-width: 500px; background: var(--white); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); padding: 25px 20px; border-top: 8px solid var(--nusuk-gold); position: relative; z-index: 5; margin-top: 20px; }
         header { text-align: center; margin-bottom: 20px; }
         h1 { color: var(--nusuk-green); font-size: 1.6rem; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
 
@@ -119,6 +106,13 @@
     </div>
 
 <script>
+    // Konfigurasi Google Analytics (gtag) jika diperlukan
+    // function trackEvent(type, lang) {
+    //     if (typeof gtag === 'function') {
+    //         gtag('event', 'calculate_click', {'zakat_type': type, 'language': lang});
+    //     }
+    // }
+
     const zakatData = {
         id: {
             title: "Kalkulator Zakat", btn: "Hitung Zakat", soul: "Jumlah Orang (Jiwa)", price: "Harga Beras per Kg", value: "Total Nilai Harta", curr: "IDR", locale: "id-ID", ruleLabel: "Nisab & Haul",
@@ -176,6 +170,8 @@
         const type = document.getElementById('zakatType').value;
         if (!type) return;
 
+        // trackEvent(type, lang); // Aktifkan jika gtag sudah dipasang
+
         const d = zakatData[lang] || zakatData['en'];
         let total = 0;
 
@@ -199,9 +195,11 @@
         document.getElementById('resRule').innerText = content.rule;
         document.getElementById('resultBox').style.display = 'block';
         
+        // Auto scroll ke hasil di mobile
         document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
+    // Latar belakang animasi yang lebih ringan untuk mobile
     const bg = document.getElementById('bgLayer');
     const icons = ['⭐', '✨', '🌙', '🌿'];
     for(let i=0; i<10; i++) {
