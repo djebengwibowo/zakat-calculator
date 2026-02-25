@@ -7,13 +7,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --nusuk-gold: #c5a059; --nusuk-green: #0b4a3f; --nusuk-bg: #f9f7f2; --white: #ffffff; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--nusuk-bg); margin: 0; padding: 20px 15px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; overflow-x: hidden; position: relative; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--nusuk-bg); margin: 0; padding: 20px 0; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; overflow-x: hidden; position: relative; }
         
         .bg-animate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: linear-gradient(135deg, #f9f7f2 0%, #ece5d5 100%); }
         .floating-icon { position: absolute; opacity: 0.6; animation: floatUp 15s infinite linear; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.4)); z-index: -1; }
         @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
-        .container { width: 100%; max-width: 500px; background: var(--white); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); padding: 25px 20px; border-top: 8px solid var(--nusuk-gold); position: relative; z-index: 5; margin-top: 20px; }
+        /* Penyesuaian Lebar Kotak untuk Mobile & Desktop */
+        .container { 
+            width: 88%; /* Memberi ruang di kiri-kanan pada mobile agar ikon terlihat */
+            max-width: 500px; 
+            background: var(--white); 
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
+            padding: 25px 20px; 
+            border-top: 8px solid var(--nusuk-gold); 
+            position: relative; 
+            z-index: 5; 
+            margin: 20px auto; 
+        }
+
         header { text-align: center; margin-bottom: 20px; }
         h1 { color: var(--nusuk-green); font-size: 1.6rem; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
 
@@ -106,13 +119,6 @@
     </div>
 
 <script>
-    // Konfigurasi Google Analytics (gtag) jika diperlukan
-    // function trackEvent(type, lang) {
-    //     if (typeof gtag === 'function') {
-    //         gtag('event', 'calculate_click', {'zakat_type': type, 'language': lang});
-    //     }
-    // }
-
     const zakatData = {
         id: {
             title: "Kalkulator Zakat", btn: "Hitung Zakat", soul: "Jumlah Orang (Jiwa)", price: "Harga Beras per Kg", value: "Total Nilai Harta", curr: "IDR", locale: "id-ID", ruleLabel: "Nisab & Haul",
@@ -170,8 +176,6 @@
         const type = document.getElementById('zakatType').value;
         if (!type) return;
 
-        // trackEvent(type, lang); // Aktifkan jika gtag sudah dipasang
-
         const d = zakatData[lang] || zakatData['en'];
         let total = 0;
 
@@ -182,35 +186,4 @@
         } else {
             const val = parseFloat(document.getElementById('totalValue').value) || 0;
             const rates = { maal: 0.025, emas: 0.025, tijarah: 0.025, zuru: 0.05, rikaz: 0.20, profesi: 0.025 };
-            total = val * (rates[type] || 0.025);
-        }
-
-        const formatter = new Intl.NumberFormat(d.locale, { style: 'currency', currency: d.curr, maximumFractionDigits: 0 });
-        document.getElementById('resTotal').innerText = formatter.format(total);
-        
-        const content = d[type] || zakatData['id'][type];
-        document.getElementById('resArabic').innerText = arabicTexts[type];
-        document.getElementById('resTrans').innerText = `"${content.tr}"`;
-        document.getElementById('resSource').innerText = content.src;
-        document.getElementById('resRule').innerText = content.rule;
-        document.getElementById('resultBox').style.display = 'block';
-        
-        // Auto scroll ke hasil di mobile
-        document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    // Latar belakang animasi yang lebih ringan untuk mobile
-    const bg = document.getElementById('bgLayer');
-    const icons = ['⭐', '✨', '🌙', '🌿'];
-    for(let i=0; i<10; i++) {
-        let span = document.createElement('span'); 
-        span.className = 'floating-icon';
-        span.innerText = icons[Math.floor(Math.random()*icons.length)];
-        span.style.left = Math.random() * 100 + 'vw';
-        span.style.animationDelay = Math.random() * 5 + 's';
-        span.style.fontSize = (Math.random() * 10 + 15) + 'px';
-        bg.appendChild(span);
-    }
-</script>
-</body>
-</html>
+            total = val * (rates
