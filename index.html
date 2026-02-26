@@ -13,10 +13,8 @@
         .floating-icon { position: absolute; opacity: 0.6; animation: floatUp 15s infinite linear; filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.4)); z-index: -1; }
         @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
-        /* Rampingkan kotak untuk mobile (85%) agar animasi icon di samping terlihat */
+        /* Container 85% untuk mobile agar animasi samping terlihat */
         .container { width: 85%; max-width: 500px; background: var(--white); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); padding: 25px 20px; border-top: 8px solid var(--nusuk-gold); position: relative; z-index: 5; margin: 20px auto; }
-        
-        /* Desktop view tetap proporsional */
         @media (min-width: 600px) { .container { width: 100%; } }
 
         header { text-align: center; margin-bottom: 20px; }
@@ -33,7 +31,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .total-amount { font-size: 1.8rem; color: var(--nusuk-green); font-weight: 800; text-align: center; margin: 10px 0; word-wrap: break-word; }
-        .nisab-warning { font-size: 0.9rem; color: #d9534f; font-weight: 700; text-align: center; margin-bottom: 10px; display: none; }
+        .nisab-warning { font-size: 0.85rem; color: #d9534f; font-weight: 700; text-align: center; margin-bottom: 10px; display: none; line-height: 1.4; }
         
         .arabic { font-family: 'Amiri', serif; font-size: 1.1rem; text-align: center; direction: rtl; line-height: 1.6; margin-bottom: 12px; color: var(--nusuk-green); padding: 0 5px; }
         .translation { font-style: italic; font-size: 0.75rem; color: #555; text-align: center; margin-bottom: 8px; line-height: 1.5; }
@@ -55,24 +53,28 @@
         </header>
 
         <div class="form-section">
-            <label id="lblLang">1. Pilih Bahasa / Select Language</label>
+            <label id="lblLangSelect">1. Pilih Bahasa / Select Language</label>
             <select id="language" onchange="updateUI()">
                 <option value="id">Bahasa Indonesia</option>
                 <option value="en">English</option>
+                <option value="zh">中文 (Chinese)</option>
+                <option value="fr">Français (French)</option>
+                <option value="de">Deutsch (German)</option>
+                <option value="es">Español (Spanish)</option>
             </select>
         </div>
 
         <div class="form-section">
             <label id="lblType">2. Pilih Jenis Zakat</label>
             <select id="zakatType" onchange="toggleInputs()">
-                <option value="">-- Pilih Jenis Zakat --</option>
-                <option value="fitrah">Zakat Fitrah</option>
-                <option value="maal">Zakat Maal (Tabungan/Uang)</option>
-                <option value="emas">Zakat Emas & Perak</option>
-                <option value="tijarah">Zakat Perdagangan</option>
-                <option value="zuru">Zakat Pertanian</option>
-                <option value="rikaz">Zakat Rikaz (Temuan 20%)</option>
-                <option value="profesi">Zakat Profesi (Gaji)</option>
+                <option value="" id="optDefault">-- Pilih Jenis Zakat --</option>
+                <option value="fitrah" id="optFitrah">Zakat Fitrah</option>
+                <option value="maal" id="optMaal">Zakat Maal (Tabungan/Uang)</option>
+                <option value="emas" id="optEmas">Zakat Emas & Perak</option>
+                <option value="tijarah" id="optTijarah">Zakat Perdagangan</option>
+                <option value="zuru" id="optZuru">Zakat Pertanian</option>
+                <option value="rikaz" id="optRikaz">Zakat Rikaz (Temuan 20%)</option>
+                <option value="profesi" id="optProfesi">Zakat Profesi (Gaji)</option>
             </select>
         </div>
 
@@ -87,7 +89,7 @@
             <div id="emasFields" style="display:none;">
                 <label id="lblGoldWeight">Total Berat (Gram)</label>
                 <input type="number" id="goldWeight" placeholder="0">
-                <label id="lblGoldPrice" style="margin-top:10px;">Harga Emas/Perak Saat Ini (per Gram)</label>
+                <label id="lblGoldPrice" style="margin-top:10px;">Harga Emas Saat Ini (per Gram)</label>
                 <input type="number" id="goldPrice" placeholder="0">
             </div>
 
@@ -122,39 +124,98 @@
         id: {
             title: "Kalkulator Zakat", btn: "Hitung Zakat", soul: "Jumlah Orang (Jiwa)", price: "Harga Beras per Kg", 
             value: "Total Nilai Harta / Hasil", goldWeight: "Total Berat (Gram)", goldPrice: "Harga Emas Saat Ini (per Gram)", 
-            nisabMsg: "Zakat Belum Wajib (Nisab 85g belum tercapai)",
-            curr: "IDR", locale: "id-ID", ruleLabel: "Nisab & Haul",
-            fitrah: { tr: "Rasulullah ﷺ mewajibkan zakat fitrah sebanyak satu sha' kurma atau satu sha' gandum atas hamba sahaya, orang merdeka, laki-laki, perempuan, kecil maupun besar dari kalangan kaum Muslimin.", src: "HR. BUKHARI NO. 1503 & MUSLIM NO. 984", rule: "Nisab: Per Jiwa | Haul: Ramadhan (Sebelum Idul Fitri)" },
+            typeTitle: "2. Pilih Jenis Zakat", nisabMsg: "Zakat Belum Wajib (Nisab 85g belum tercapai)", curr: "IDR", locale: "id-ID", ruleLabel: "Nisab & Haul",
+            types: ["-- Pilih Jenis Zakat --", "Zakat Fitrah", "Zakat Maal (Tabungan)", "Zakat Emas & Perak", "Zakat Perdagangan", "Zakat Pertanian", "Zakat Rikaz (Temuan)", "Zakat Profesi"],
+            fitrah: { tr: "Rasulullah ﷺ mewajibkan zakat fitrah sebanyak satu sha' kurma atau satu sha' gandum atas hamba sahaya, orang merdeka, laki-laki, perempuan, kecil maupun besar dari kalangan kaum Muslimin.", src: "HR. BUKHARI NO. 1503", rule: "Nisab: Per Jiwa | Haul: Ramadhan" },
             maal: { tr: "Ambillah zakat dari harta mereka guna membersihkan dan mensucikan mereka, dan berdoalah untuk mereka.", src: "QS. AT-TAWBAH: 103", rule: "Nisab: 85g Emas | Haul: 1 Tahun" },
-            emas: { tr: "Dan orang-orang yang menyimpan emas dan perak dan tidak menginfakkannya di jalan Allah, maka berikanlah kabar gembira kepada mereka bahwa mereka akan mendapat azab yang pedih.", src: "QS. AT-TAWBAH: 34", rule: "Nisab: 85g Emas / 595g Perak | Haul: 1 Tahun" },
+            emas: { tr: "Dan orang-orang yang menyimpan emas dan perak dan tidak menginfakkannya di jalan Allah, maka berikanlah kabar gembira kepada mereka bahwa mereka akan mendapat azab yang pedih.", src: "QS. AT-TAWBAH: 34", rule: "Nisab: 85g Emas | Haul: 1 Tahun" },
             tijarah: { tr: "Wahai orang-orang yang beriman! Nafkahkanlah sebagian dari hasil usahamu yang baik-baik.", src: "QS. AL-BAQARAH: 267", rule: "Nisab: 85g Emas | Haul: 1 Tahun" },
             zuru: { tr: "Makanlah buahnya apabila ia berbuah dan tunaikanlah haknya (zakatnya) pada hari memetik hasilnya.", src: "QS. AL-AN'AM: 141", rule: "Nisab: 653 Kg Gabah | Haul: Setiap Panen" },
-            rikaz: { tr: "Rasulullah ﷺ bersabda: '...Dan pada rikaz (harta karun temuan) wajib dizakatkan seperlimanya (20%).'", src: "HR. BUKHARI NO. 1499", rule: "Nisab: Tidak Ada | Haul: Langsung" },
+            rikaz: { tr: "Dan pada rikaz (harta karun temuan) wajib dizakatkan seperlimanya (20%).", src: "HR. BUKHARI NO. 1499", rule: "Nisab: Tidak Ada | Haul: Langsung" },
             profesi: { tr: "Wahai orang-orang yang beriman! Infakkanlah sebagian dari hasil usahamu yang baik-baik.", src: "QS. AL-BAQARAH: 267", rule: "Nisab: 85g Emas | Haul: 1 Tahun" }
         },
         en: {
             title: "Zakat Calculator", btn: "Calculate Zakat", soul: "Number of People", price: "Rice Price per Kg", 
             value: "Total Wealth Value", goldWeight: "Total Weight (Grams)", goldPrice: "Gold Price (per Gram)", 
-            nisabMsg: "Zakat Not Required (Nisab 85g not reached)",
-            curr: "USD", locale: "en-US", ruleLabel: "Nisab & Haul",
-            fitrah: { tr: "Allah's Messenger ﷺ enjoined the payment of one Sha' of dates or barley as Zakat-ul-Fitr on every Muslim.", src: "SAHIH BUKHARI", rule: "Nisab: Per Person | Haul: Before Eid" },
-            emas: { tr: "And those who hoard gold and silver and spend it not in the way of Allah - give them tidings of a painful punishment.", src: "QS. AT-TAWBAH: 34", rule: "Nisab: 85g Gold | Haul: 1 Year" }
+            typeTitle: "2. Select Zakat Type", nisabMsg: "Zakat Not Required (Nisab 85g not reached)", curr: "USD", locale: "en-US", ruleLabel: "Nisab & Haul",
+            types: ["-- Select Zakat Type --", "Zakat Fitrah", "Zakat Maal (Savings)", "Zakat Gold & Silver", "Zakat on Trade", "Agricultural Zakat", "Rikaz (Found Treasure)", "Professional Zakat"],
+            fitrah: { tr: "The Messenger of Allah ﷺ enjoined Zakat-ul-Fitr as one Sha' of dates or barley on every Muslim.", src: "SAHIH BUKHARI", rule: "Nisab: Per Person | Haul: Ramadhan" },
+            maal: { tr: "Take Alms from their wealth in order to purify them and sanctify them.", src: "QS. AT-TAWBAH: 103", rule: "Nisab: 85g Gold | Haul: 1 Year" },
+            emas: { tr: "And those who hoard gold and silver and spend it not in the way of Allah - give them tidings of a painful punishment.", src: "QS. AT-TAWBAH: 34", rule: "Nisab: 85g Gold | Haul: 1 Year" },
+            tijarah: { tr: "O you who have believed, spend from the good things which you have earned.", src: "QS. AL-BAQARAH: 267", rule: "Nisab: 85g Gold | Haul: 1 Year" },
+            zuru: { tr: "Eat of its fruit when it yields and give its due [zakat] on the day of its harvest.", src: "QS. AL-AN'AM: 141", rule: "Nisab: 653 Kg Grain | Haul: Harvest" },
+            rikaz: { tr: "And on the Rikaz (found treasure) a fifth (20%) is to be paid as Zakat.", src: "SAHIH BUKHARI", rule: "Nisab: None | Haul: Immediate" },
+            profesi: { tr: "O you who have believed, spend from the good things which you have earned.", src: "QS. AL-BAQARAH: 267", rule: "Nisab: 85g Gold | Haul: 1 Year" }
+        },
+        zh: {
+            title: "天课计算器", btn: "计算天课", soul: "人数", price: "每公斤大米价格", 
+            value: "财产总值", goldWeight: "总重量 (克)", goldPrice: "当前金价 (每克)", 
+            typeTitle: "2. 选择天课类型", nisabMsg: "无需缴纳天课 (未达到 85 克起征点)", curr: "CNY", locale: "zh-CN", ruleLabel: "起征点与期限",
+            types: ["-- 选择天课类型 --", "开斋天课 (Fitrah)", "财产天课 (Maal)", "金银天课", "商业天课", "农业天课", "意外之财 (Rikaz)", "职业天课"],
+            fitrah: { tr: "穆圣 ﷺ 规定穆斯林不论奴隶或自由人、男女老少，都必须缴纳一沙阿的椰枣或大麦作为开斋天课。", src: "布哈里圣训", rule: "起征点: 按人头 | 期限: 斋月" },
+            maal: { tr: "你当从他们的财产中征收天课，你借此使他们干净，并使他们纯洁。", src: "古兰经 9:103", rule: "起征点: 85克黄金 | 期限: 1年" },
+            emas: { tr: "那些囤积金银而不为主道费用的人，你当以痛苦的刑罚向他们报喜。", src: "古兰经 9:34", rule: "起征点: 85克黄金 | 期限: 1年" },
+            tijarah: { tr: "信道的人们啊！你们当分舍你们所收入的洁净财物。", src: "古兰经 2:267", rule: "起征点: 85克黄金 | 期限: 1年" },
+            zuru: { tr: "当结果的时候，你们可以吃其果实；在收获的日子，你们当施舍其中的法定捐项。", src: "古兰经 6:141", rule: "起征点: 653公斤谷物 | 期限: 收获时" },
+            rikaz: { tr: "在意外发现的珍宝（Rikaz）中，必须缴纳五分之一（20%）的天课。", src: "布哈里圣训", rule: "起征点: 无 | 期限: 立即" },
+            profesi: { tr: "信道的人们啊！你们当分舍你们所收入的洁净财物。", src: "古兰经 2:267", rule: "起征点: 85克黄金 | 期限: 1年" }
+        },
+        fr: {
+            title: "Calculateur de Zakat", btn: "Calculer la Zakat", soul: "Nombre de personnes", price: "Prix du riz par kg", 
+            value: "Valeur totale des biens", goldWeight: "Poids total (Grammes)", goldPrice: "Prix de l'or (par Gramme)", 
+            typeTitle: "2. Choisir le type de Zakat", nisabMsg: "Zakat non requise (Nisab 85g non atteint)", curr: "EUR", locale: "fr-FR", ruleLabel: "Nisab & Haul",
+            types: ["-- Choisir le type --", "Zakat Al Fitr", "Zakat Al Maal", "Zakat sur l'Or", "Zakat de Commerce", "Zakat Agricole", "Zakat Al Rikaz", "Zakat Professionnelle"],
+            fitrah: { tr: "Le Messager d'Allah ﷺ a imposé la Zakat-ul-Fitr d'un Sa' de dattes ou d'orge sur tout musulman.", src: "SAHIH BUKHARI", rule: "Nisab: Par personne | Haul: Ramadan" },
+            maal: { tr: "Prélève une aumône sur leurs biens pour les purifier et les bénir.", src: "CORAN 9:103", rule: "Nisab: 85g d'Or | Haul: 1 An" },
+            emas: { tr: "À ceux qui thésaurisent l'or et l'argent et ne les dépensent pas dans le sentier d'Allah, annonce un châtiment douloureux.", src: "CORAN 9:34", rule: "Nisab: 85g d'Or | Haul: 1 An" },
+            tijarah: { tr: "Ô vous qui croyez! Dépensez des meilleures choses que vous avez gagnées.", src: "CORAN 2:267", rule: "Nisab: 85g d'Or | Haul: 1 An" },
+            zuru: { tr: "Mangez-en les fruits, et acquittez-en les droits le jour de la récolte.", src: "CORAN 6:141", rule: "Nisab: 653 kg de grain | Haul: Récolte" },
+            rikaz: { tr: "Sur le trésor trouvé (Rikaz), le cinquième (20%) doit être payé.", src: "SAHIH BUKHARI", rule: "Nisab: Aucun | Haul: Immédiat" },
+            profesi: { tr: "Ô vous qui croyez! Dépensez des meilleures choses que vous avez gagnées.", src: "CORAN 2:267", rule: "Nisab: 85g d'Or | Haul: 1 An" }
+        },
+        de: {
+            title: "Zakat-Rechner", btn: "Zakat berechnen", soul: "Anzahl der Personen", price: "Reispreis pro kg", 
+            value: "Gesamtvermögen", goldWeight: "Gesamtgewicht (Gramm)", goldPrice: "Goldpreis (pro Gramm)", 
+            typeTitle: "2. Zakat-Typ auswählen", nisabMsg: "Zakat nicht erforderlich (Nisab 85g nicht erreicht)", curr: "EUR", locale: "de-DE", ruleLabel: "Nisab & Haul",
+            types: ["-- Typ wählen --", "Zakat Al-Fitr", "Zakat Al-Maal", "Zakat auf Gold", "Zakat Handel", "Landwirtschaft", "Zakat Rikaz", "Zakat Beruf"],
+            fitrah: { tr: "Der Gesandte Allahs ﷺ ordnete die Zakat-ul-Fitr als einen Sa' an Datteln oder Gerste für jeden Muslim an.", src: "SAHIH BUKHARI", rule: "Nisab: Pro Person | Haul: Ramadan" },
+            maal: { tr: "Nimm Almosen von ihrem Besitz, um sie dadurch zu reinigen und zu läutern.", src: "SURA 9:103", rule: "Nisab: 85g Gold | Haul: 1 Jahr" },
+            emas: { tr: "Und diejenigen, die Gold und Silber horten und es nicht auf Allahs Weg ausgeben, denen verkünde schmerzliche Strafe.", src: "SURA 9:34", rule: "Nisab: 85g Gold | Haul: 1 Jahr" },
+            tijarah: { tr: "O die ihr glaubt, gebt von den guten Dingen aus, die ihr erworben habt.", src: "SURA 2:267", rule: "Nisab: 85g Gold | Haul: 1 Jahr" },
+            zuru: { tr: "Esst von seinen Früchten und entrichtet am Tag der Ernte die darauf entfallende Gebühr.", src: "SURA 6:141", rule: "Nisab: 653 kg Getreide | Haul: Ernte" },
+            rikaz: { tr: "Auf den gefundenen Schatz (Rikaz) ist ein Fünftel (20%) zu entrichten.", src: "SAHIH BUKHARI", rule: "Nisab: Keine | Haul: Sofort" },
+            profesi: { tr: "O die ihr glaubt, gebt von den guten Dingen aus, die ihr erworben habt.", src: "SURA 2:267", rule: "Nisab: 85g Gold | Haul: 1 Jahr" }
+        },
+        es: {
+            title: "Calculadora de Zakat", btn: "Calcular Zakat", soul: "Número de personas", price: "Precio del arroz por kg", 
+            value: "Valor total de bienes", goldWeight: "Peso total (Gramos)", goldPrice: "Precio del oro (por Gramo)", 
+            typeTitle: "2. Seleccionar tipo de Zakat", nisabMsg: "Zakat no obligatoria (Nisab 85g no alcanzado)", curr: "EUR", locale: "es-ES", ruleLabel: "Nisab & Haul",
+            types: ["-- Elegir tipo --", "Zakat Al Fitr", "Zakat Al Maal", "Zakat sobre Oro", "Zakat de Comercio", "Zakat Agrícola", "Zakat Al Rikaz", "Zakat Profesional"],
+            fitrah: { tr: "El Mensajero de Allah ﷺ prescribió el Zakat-ul-Fitr como un Sa' de dátiles o cebada para cada musulmán.", src: "SAHIH BUKHARI", rule: "Nisab: Por persona | Haul: Ramadán" },
+            maal: { tr: "Toma de sus bienes una limosna para limpiarles y purificarles con ella.", src: "CORÁN 9:103", rule: "Nisab: 85g de Oro | Haul: 1 Año" },
+            emas: { tr: "A quienes atesoran el oro y la plata y no lo gastan en el camino de Allah, anúnciales un castigo doloroso.", src: "CORÁN 9:34", rule: "Nisab: 85g de Oro | Haul: 1 Año" },
+            tijarah: { tr: "¡Oh, creyentes! Dad de las cosas buenas que habéis ganado.", src: "CORÁN 2:267", rule: "Nisab: 85g de Oro | Haul: 1 Año" },
+            zuru: { tr: "Comed de sus frutos cuando los den y pagad lo que sea debido el día de la cosecha.", src: "CORÁN 6:141", rule: "Nisab: 653 kg grano | Haul: Cosecha" },
+            rikaz: { tr: "Sobre el tesoro encontrado (Rikaz), se debe pagar la quinta parte (20%).", src: "SAHIH BUKHARI", rule: "Nisab: Ninguna | Haul: Inmediato" },
+            profesi: { tr: "¡Oh, creyentes! Dad de las cosas buenas que habéis ganado.", src: "CORÁN 2:267", rule: "Nisab: 85g de Oro | Haul: 1 Año" }
         }
     };
 
     const arabicTexts = {
-        fitrah: "فَرَضَ رَسُولُ اللَّهِ ﷺ زَكَاةَ الْفِطْرِ صَاعًا مِنْ تَمْرٍ أَوْ صَاعًا مِنْ شَعِيرٍ...",
-        maal: "خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِمْ بِهَا...",
-        emas: "وَالَّذِينَ يَكْنِزُونَ الذَّهَبَ وَالْفِضَّةَ وَلَا يُنْفِقُونَهَا فِي سَبِيلِ اللَّهِ...",
-        tijarah: "يَا أَيُّهَا الَّذِينَ آمَنُوا أَنْفِقُوا مِنْ طَيِّبَاتِ مَا كَسَبْتُمْ...",
-        zuru: "كُلُوا مِنْ ثَمَرِهِ إِذَا أَثْمَرَ وَآتُوا حَقَّهُ يَوْمَ حَصَادِهِ",
+        fitrah: "فَرَضَ رَسُولُ اللَّهِ ﷺ زَكَاةَ الْفِطْرِ صَاعًا مِنْ تَمْرٍ أَوْ صَاعًا مِنْ شَعِيرٍ عَلَى الْعَبْدِ وَالْحُرِّ وَالذَّكَرِ وَالأُنْثَى وَالصَّغِيرِ وَالْكَبِيرِ مِنَ الْمُسْلِمِينَ",
+        maal: "خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِمْ بِهَا وَصَلِّ عَلَيْهِمْ",
+        emas: "وَالَّذِينَ يَكْنِزُونَ الذَّهَبَ وَالْفِضَّةَ وَلَا يُنْفِقُونَهَا فِي سَبِيلِ اللَّهِ فَبَشِّرْهُمْ بِعَذَابٍ أَلِيمٍ",
+        tijarah: "يَا أَيُّهَا الَّذِينَ آمَنُوا أَنْفِقُوا مِنْ طَيِّبَاتِ مَا كَسَبْتُمْ",
+        zuru: "كُلُوا مِنْ ثَمَرِهِ إِذَا أَثْمَرَ وَآتُوا حَقَّهُ يَوْMَ حَصَادِهِ",
         rikaz: "وَفِي الرِّكَازِ الْخُمُسُ",
         profesi: "يَا أَيُّهَا الَّذِينَ آمَنُوا أَنْفِقُوا مِنْ طَيِّبَاتِ مَا كَسَبْتُمْ"
     };
 
     function updateUI() {
         const l = document.getElementById('language').value;
-        const d = zakatData[l] || zakatData['id'];
+        const d = zakatData[l] || zakatData['en'];
+        const idDefault = zakatData['id'];
+
         document.getElementById('appTitle').innerText = d.title;
         document.getElementById('btnCalc').innerText = d.btn;
         document.getElementById('lblPrice').innerText = d.price;
@@ -163,6 +224,13 @@
         document.getElementById('lblGoldWeight').innerText = d.goldWeight;
         document.getElementById('lblGoldPrice').innerText = d.goldPrice;
         document.getElementById('lblRule').innerText = d.ruleLabel;
+        document.getElementById('lblType').innerText = d.typeTitle || idDefault.typeTitle;
+
+        const optIds = ['optDefault', 'optFitrah', 'optMaal', 'optEmas', 'optTijarah', 'optZuru', 'optRikaz', 'optProfesi'];
+        optIds.forEach((id, index) => {
+            document.getElementById(id).innerText = d.types[index] || idDefault.types[index];
+        });
+
         document.getElementById('resultBox').style.display = 'none';
     }
 
@@ -179,7 +247,8 @@
         const type = document.getElementById('zakatType').value;
         if (!type) return;
 
-        const d = zakatData[lang] || zakatData['id'];
+        const d = zakatData[lang] || zakatData['en'];
+        const idD = zakatData['id'];
         let total = 0;
         let nisabReached = true;
 
@@ -190,13 +259,8 @@
         } else if (type === 'emas') {
             const weight = parseFloat(document.getElementById('goldWeight').value) || 0;
             const price = parseFloat(document.getElementById('goldPrice').value) || 0;
-            
-            if (weight < 85) {
-                nisabReached = false;
-                total = 0;
-            } else {
-                total = (weight * price) * 0.025;
-            }
+            if (weight < 85) { nisabReached = false; total = 0; }
+            else { total = (weight * price) * 0.025; }
         } else {
             const val = parseFloat(document.getElementById('totalValue').value) || 0;
             const rates = { maal: 0.025, tijarah: 0.025, zuru: 0.05, rikaz: 0.20, profesi: 0.025 };
@@ -206,16 +270,15 @@
         const formatter = new Intl.NumberFormat(d.locale, { style: 'currency', currency: d.curr, maximumFractionDigits: 0 });
         document.getElementById('resTotal').innerText = formatter.format(total);
         
-        // Menampilkan pesan Nisab jika belum tercapai
         const nisabWarn = document.getElementById('nisabWarn');
         if (!nisabReached) {
-            nisabWarn.innerText = d.nisabMsg;
+            nisabWarn.innerText = d.nisabMsg || idD.nisabMsg;
             nisabWarn.style.display = 'block';
         } else {
             nisabWarn.style.display = 'none';
         }
 
-        const content = d[type] || zakatData['id'][type];
+        const content = d[type] || idD[type];
         document.getElementById('resArabic').innerText = arabicTexts[type] || "";
         document.getElementById('resTrans').innerText = content ? `"${content.tr}"` : "";
         document.getElementById('resSource').innerText = content ? content.src : "";
@@ -225,6 +288,7 @@
         document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
+    // Animasi Latar Belakang
     const bg = document.getElementById('bgLayer');
     const icons = ['⭐', '✨', '🌙', '🌿'];
     for(let i=0; i<12; i++) {
@@ -235,7 +299,7 @@
         span.style.animationDelay = Math.random() * 5 + 's';
         bg.appendChild(span);
     }
+    updateUI();
 </script>
 </body>
 </html>
-
