@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-     <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4L8Y81M5E"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-V4L8Y81M5E');
-    </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    ...
-</head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zakat Calculator - Multi Language Tool</title>
@@ -131,6 +117,9 @@
             <select id="language" onchange="updateUI()">
                 <option value="en" selected>English</option>
                 <option value="id">Bahasa Indonesia</option>
+                <option value="ar">العربية (Arabic)</option>
+                <option value="fa">فارسی (Persian)</option>
+                <option value="tr">Türkçe (Turkish)</option>
                 <option value="zh">中文 (Chinese)</option>
                 <option value="fr">Français (French)</option>
                 <option value="de">Deutsch (German)</option>
@@ -244,6 +233,81 @@
                 {h: "Zakat Pertanian", p: "Dikeluarkan setiap panen jika mencapai nisab 653kg gabah, tarif 5% (irigasi) atau 10% (tadah hujan)."},
                 {h: "Zakat Rikaz", p: "Zakat sebesar 20% atas harta karun atau temuan, dibayarkan langsung tanpa syarat haul."},
                 {h: "Zakat Profesi", p: "Zakat atas pendapatan atau gaji jika nilainya setara atau lebih dari 85 gram emas. Tarif 2.5%."}
+            ]
+        },
+        ar: {
+            mainH: "أداة متعددة اللغات لحساب الزكاة", subH: "أداة دقيقة لحساب زكاة المال، المهنة، الذهب والفضة، التجارة، الزراعة، الركاز، والفطر.",
+            gTitle: "دليل البدء السريع", s1t: "اللغة", s2t: "الفئة", s3t: "القيم", s4t: "النتيجة",
+            s1d: "اختر", s2d: "حدد", s3d: "أدخل", s4d: "عرض", warnEmas: "الزكاة غير واجبة (لم يبلغ النصاب 85 جم)",
+            title: "حاسبة الزكاة", btn: "احسب الزكاة", soul: "عدد الأشخاص", price: "سعر الأرز / كجم", value: "إجمالي قيمة الثروة",
+            weight: "الوزن الإجمالي (جرام)", emasP: "سعر الذهب (للجرام)",
+            typeTitle: "2. اختر نوع الزكاة", ruleLabel: "النصاب والحول", curr: "SAR", locale: "ar-SA",
+            types: ["-- اختر النوع --", "زكاة الفطر", "زكاة المال", "زكاة الذهب والفضة", "زكاة عروض التجارة", "زكاة الزروع", "زكاة الركاز", "زكاة المهن الحرة"],
+            fitrah: { tr: "فرض رسول الله ﷺ زكاة الفطر طهرة للصائم.", src: "HR. BUKHARI & MUSLIM", rule: "النصاب: لكل فرد | الحول: نهاية رمضان" },
+            maal: { tr: "خذ من أموالهم صدقة تطهرهم وتزكيهم بها.", src: "QS. AT-TAWBAH: 103", rule: "النصاب: 85 جم ذهب | الحول: سنة واحدة" },
+            emas: { tr: "والذين يكنزون الذهب والفضة ولا ينفقونها في سبيل الله فبشرهم بعذاب أليم.", src: "QS. AT-TAWBAH: 34", rule: "النصاب: 85 جم ذهب | الحول: سنة واحدة" },
+            tijarah: { tr: "يا أيها الذين آمنوا أنفقوا من طيبات ما كسبتم.", src: "QS. AL-BAQARAH: 267", rule: "النصاب: 85 جم ذهب | الحول: سنة واحدة" },
+            zuru: { tr: "كلوا من ثمره إذا أثمر وآتوا حقه يوم حصاده.", src: "QS. AL-AN'AM: 141", rule: "النصاب: 653 كجم حبوب | الحول: وقت الحصاد" },
+            rikaz: { tr: "وفي الركاز الخمس (20%).", src: "HR. BUKHARI", rule: "النصاب: لا يوجد | الحول: فوري" },
+            profesi: { tr: "يا أيها الذين آمنوا أنفقوا من طيبات ما كسبتم.", src: "QS. AL-BAQARAH: 267", rule: "النصاب: 85 جم ذهب | الحول: سنة واحدة" },
+            arts: [
+                {h: "زكاة الفطر", p: "صدقة واجبة يدفعها كل مسلم في نهاية رمضان، وعادة ما تكون 2.5 كجم من الطعام الأساسي للشخص الواحد."},
+                {h: "زكاة المال", p: "ضريبة الثروة على المدخرات أو الأسهم أو النقد المحتفظ به لمدة عام إذا تجاوز قيمة 85 جرامًا من الذهب. النسبة هي 2.5%."},
+                {h: "زكاة الذهب والفضة", p: "تجب على ممتلكات الذهب البالغة 85 جرامًا أو أكثر والمحتفظ بها لمدة عام. النسبة هي 2.5%."},
+                {h: "زكاة عروض التجارة", p: "تُحسب من الأصول التجارية مطروحًا منها الديون قصيرة الأجل. النسبة هي 2.5%."},
+                {h: "زكاة الزروع", p: "تُدفع عند الحصاد إذا بلغ المحصول 653 كجم. النسبة 5% للأراضي المروية و 10% للأراضي البعلية."},
+                {h: "زكاة الركاز", p: "ضريبة بنسبة 20% على الكنوز القديمة الموجودة، ولا يشترط فيها الحول."},
+                {h: "زكاة المهن الحرة", p: "الزكاة على الراتب أو الأتعاب المهنية إذا تجاوزت قيمة 85 جرامًا من الذهب. النسبة هي 2.5%."}
+            ]
+        },
+        fa: {
+            mainH: "ابزار چند زبانه برای محاسبه زکات", subH: "ابزاری دقیق برای زکات مال، شغل، طلا و نقره، تجارت، کشاورزی، رکاز و فطره.",
+            gTitle: "راهنمای شروع سریع", s1t: "زبان", s2t: "دسته بندی", s3t: "مقادیر", s4t: "نتیجه",
+            s1d: "انتخاب", s2d: "برگزیدن", s3d: "ورود", s4d: "مشاهده", warnEmas: "زکات واجب نیست (نصاب 85 گرم نرسیده است)",
+            title: "ماشین حساب زکات", btn: "محاسبه زکات", soul: "تعداد افراد", price: "قیمت برنج / کیلوگرم", value: "ارزش کل دارایی",
+            weight: "وزن کل (گرم)", emasP: "قیمت طلا (گرم)",
+            typeTitle: "2. نوع زکات را انتخاب کنید", ruleLabel: "نصاب و حول", curr: "IRR", locale: "fa-IR",
+            types: ["-- انتخاب نوع --", "زکات فطره", "زکات مال", "زکات طلا و نقره", "زکات تجارت", "زکات کشاورزی", "زکات رکاز", "زکات شغل"],
+            fitrah: { tr: "پیامبر خدا ﷺ زکات فطره را بر هر مسلمانی واجب کرد.", src: "HR. BUKHARI & MUSLIM", rule: "نصاب: برای هر نفر | حول: پایان رمضان" },
+            maal: { tr: "از اموال آنان صدقه‌ای بگیر تا به وسیله آن پاکشان سازی.", src: "QS. AT-TAWBAH: 103", rule: "نصاب: 85 گرم طلا | حول: 1 سال" },
+            emas: { tr: "و کسانی که طلا و نقره می‌اندوزند و آن را در راه خدا انفاق نمی‌کنند...", src: "QS. AT-TAWBAH: 34", rule: "نصاب: 85 گرم طلا | حول: 1 سال" },
+            tijarah: { tr: "ای کسانی که ایمان آورده‌اید! از چیزهای پاکیزه‌ای که به دست آورده‌اید انفاق کنید.", src: "QS. AL-BAQARAH: 267", rule: "نصاب: 85 گرم طلا | حول: 1 سال" },
+            zuru: { tr: "از میوه آن چون ثمر داد بخورید و حق آن را روز برداشتش بدهید.", src: "QS. AL-AN'AM: 141", rule: "نصاب: 653 کیلوگرم غلات | حول: زمان برداشت" },
+            rikaz: { tr: "در رکاز (گنج پنهان) یک پنجم (20%) زکات است.", src: "HR. BUKHARI", rule: "نصاب: ندارد | حول: فوری" },
+            profesi: { tr: "ای کسانی که ایمان آورده‌اید! از چیزهای پاکیزه‌ای که به دست آورده‌اید انفاق کنید.", src: "QS. AL-BAQARAH: 267", rule: "نصاب: 85 گرم طلا | حول: 1 سال" },
+            arts: [
+                {h: "زکات فطره", p: "صدقه واجبی که هر مسلمان در پایان ماه رمضان می‌پردازد، معمولاً 2.5 کیلوگرم غذای اصلی برای هر نفر."},
+                {h: "زکات مال", p: "مالیات بر پس‌انداز، سهام یا وجه نقدی که 1 سال نگهداری شود و از ارزش 85 گرم طلا بیشتر باشد. نرخ 2.5% است."},
+                {h: "زکات طلا و نقره", p: "بر موجودی طلای 85 گرم یا بیشتر که 1 سال نگهداری شود واجب است. نرخ 2.5% است."},
+                {h: "زکات تجارت", p: "از دارایی‌های تجاری منهای بدهی‌های کوتاه‌مدت محاسبه می‌شود. نرخ 2.5% است."},
+                {h: "زکات کشاورزی", p: "هنگام برداشت اگر محصول به 653 کیلوگرم برسد پرداخت می‌شود. نرخ برای زمین‌های آبی 5% و دیم 10% است."},
+                {h: "زکات رکاز", p: "مالیات 20 درصدی بر گنجینه‌های باستانی یافت شده، بدون نیاز به دوره انتظار (حول)."},
+                {h: "زکات شغل", p: "زکات حقوق یا درآمد شغلی اگر از ارزش 85 گرم طلا بیشتر باشد. نرخ 2.5% است."}
+            ]
+        },
+        tr: {
+            mainH: "Zekat Hesaplama Çok Dilli Aracı", subH: "Maal, Meslek, Altın ve Gümüş, Ticaret, Tarım, Rikaz ve Fitre için doğru araç.",
+            gTitle: "Hızlı Başlangıç Kılavuzu", s1t: "Dil", s2t: "Kategori", s3t: "Değerler", s4t: "Sonuç",
+            s1d: "Seç", s2d: "Belirle", s3d: "Gir", s4d: "Görüntüle", warnEmas: "Zekat Gerekli Değil (85g nisap miktarına ulaşılmadı)",
+            title: "Zekat Hesaplayıcı", btn: "Zekat Hesapla", soul: "Kişi Sayısı", price: "Pirinç Fiyatı/Kg", value: "Toplam Servet Değeri",
+            weight: "Toplam Ağırlık (Gram)", emasP: "Altın Fiyatı (Gram başına)",
+            typeTitle: "2. Zekat Türünü Seçin", ruleLabel: "Nisap ve Havl", curr: "TRY", locale: "tr-TR",
+            types: ["-- Tür Seçin --", "Fitre Zekatı", "Mal Zekatı", "Altın ve Gümüş Zekatı", "Ticaret Zekatı", "Tarım Zekatı", "Rikaz Zekatı", "Meslek Zekatı"],
+            fitrah: { tr: "Allah'ın Elçisi ﷺ her Müslümana Fitre Zekatını farz kılmıştır.", src: "HR. BUKHARI & MUSLIM", rule: "Nisap: Kişi Başı | Havl: Ramazan Sonu" },
+            maal: { tr: "Onları arındırmak ve temize çıkarmak için mallarından sadaka al.", src: "QS. AT-TAWBAH: 103", rule: "Nisap: 85g Altın | Havl: 1 Yıl" },
+            emas: { tr: "Altın ve gümüşü biriktirip de onları Allah yolunda harcamayanlar...", src: "QS. AT-TAWBAH: 34", rule: "Nisap: 85g Altın | Havl: 1 Yıl" },
+            tijarah: { tr: "Ey iman edenler! Kazandıklarınızın iyilerinden infak edin.", src: "QS. AL-BAQARAH: 267", rule: "Nisap: 85g Altın | Havl: 1 Yıl" },
+            zuru: { tr: "Mahsul verdiğinde meyvesinden yiyin ve hasat günü hakkını verin.", src: "QS. AL-AN'AM: 141", rule: "Nisap: 653kg Tahıl | Havl: Hasat Zamanı" },
+            rikaz: { tr: "Gömülü hazinelerde (Rikaz) beşte bir (20%) zekat vardır.", src: "HR. BUKHARI", rule: "Nisap: Yok | Havl: Hemen" },
+            profesi: { tr: "Ey iman edenler! Kazandıklarınızın iyilerinden infak edin.", src: "QS. AL-BAQARAH: 267", rule: "Nisap: 85g Altın | Havl: 1 Yıl" },
+            arts: [
+                {h: "Fitre Zekatı", p: "Ramazan sonunda her Müslüman tarafından ödenen zorunlu bir sadaka, genellikle kişi başı 2.5 kg temel gıda."},
+                {h: "Mal Zekatı", p: "1 yıl boyunca elde tutulan tasarruflar, hisse senetleri veya nakit paranın değeri 85g altını aşıyorsa alınır. Oran %2.5'tir."},
+                {h: "Altın ve Gümüş Zekatı", p: "1 yıl boyunca elde tutulan 85g veya daha fazla altın için gereklidir. Oran toplam değerin %2.5'idir."},
+                {h: "Ticaret Zekatı", p: "Ticari varlıklardan kısa vadeli borçlar çıkarılarak hesaplanır. Oran %2.5'tir."},
+                {h: "Tarım Zekatı", p: "Mahsul 653 kg'a ulaşırsa hasat zamanı ödenir. Oranlar sulanan arazi için %5, yağmurla beslenen arazi için %10'dur."},
+                {h: "Rikaz Zekatı", p: "Bulunan eski hazineler üzerinden bekleme süresi (havl) aranmaksızın alınan %20 vergi."},
+                {h: "Meslek Zekatı", p: "Maaş veya mesleki gelirlerin değeri 85g altını aşıyorsa verilen zekattır. Oran %2.5'tir."}
             ]
         },
         zh: {
@@ -455,4 +519,3 @@
 </script>
 </body>
 </html>
-
